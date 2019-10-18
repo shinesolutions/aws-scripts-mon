@@ -1,4 +1,4 @@
-version ?= 1.2.2-shine-pre.0
+version ?= 1.2.2000-pre.0
 
 ci: clean stage package
 
@@ -10,7 +10,7 @@ stage:
 
 package: clean stage
 	zip \
-	  -r stage/aws-scripts-mon-$(version).zip . \
+	  -r stage/shinesolutions-aws-scripts-mon-$(version).zip . \
     -x "*.DS_Store" \
     -x "*bin*" \
     -x "*stage*" \
@@ -24,4 +24,4 @@ package: clean stage
 release:
 	rtk release
 
-.PHONY: ci clean deps lint package release
+.PHONY: ci clean stage package release
