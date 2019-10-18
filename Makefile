@@ -1,4 +1,4 @@
-version ?= 1.2.2-pre.0
+version ?= 1.2.2
 
 ci: clean stage package
 
