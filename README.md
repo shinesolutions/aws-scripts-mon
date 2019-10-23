@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/shinesolutions/aws-scripts-mon.svg)](http://travis-ci.org/shinesolutions/aws-scripts-mon)
+[![Build Status](https://github.com/shinesolutions/aws-scripts-mon/workflows/CI/badge.svg)](https://github.com/shinesolutions/aws-scripts-mon/actions?workflow=CI)
 
 AWS CloudWatch Monitoring Scripts
 ---------------------------------
