@@ -9,14 +9,16 @@ We add this customisation because we would like to be able to explicitly define 
 
 On the original code, the `Filesystem` value is derived from `/bin/df -k -l -P $df_path` which can differ between systems. This causes a problem where we can't guarantee what `Filesystem` value to use when filtering the metrics.
 
-Installation
-------------
+Usage
+-----
 
 We use [MasterRoot24/cloudwatch](https://forge.puppet.com/MasterRoot24/cloudwatch) Puppet module to provision AWS CloudWatch Monitoring Scripts, and then customise the `zip_url` parameter value to point to this fork's released artifacts.
 
 For example:
 
+```
   class { '::cloudwatch':
     ...
     zip_url => 'https://github.com/shinesolutions/aws-scripts-mon/releases/download/1.3.0/shinesolutions-aws-scripts-mon-1.3.0.zip',
   }
+```
