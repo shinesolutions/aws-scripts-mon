@@ -144,6 +144,7 @@ my $argv_size = @ARGV;
   $parse_result = GetOptions(
     'help|?' => \$show_help,
     'version' => \$show_version,
+    'proxy:s' => \$proxy,
     'mem-util' => \$report_mem_util,
     'mem-used' => \$report_mem_used,
     'mem-avail' => \$report_mem_avail,
@@ -372,6 +373,7 @@ my $as_group_name;
 if ($auto_scaling)
 {
   my %opts = ();
+  $opts{'proxy'} = $proxy;
   $opts{'aws-credential-file'} = $aws_credential_file;
   $opts{'aws-access-key-id'} = $aws_access_key_id;
   $opts{'aws-secret-key'} = $aws_secret_key;

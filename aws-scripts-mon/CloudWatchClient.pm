@@ -1,14 +1,14 @@
 # Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
-# Licensed under the Apache License, Version 2.0 (the "License"). You may not 
-# use this file except in compliance with the License. A copy of the License 
+# Licensed under the Apache License, Version 2.0 (the "License"). You may not
+# use this file except in compliance with the License. A copy of the License
 # is located at
 #
 #        http://aws.amazon.com/apache2.0/
 #
-# or in the "LICENSE" file accompanying this file. This file is distributed 
-# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
-# express or implied. See the License for the specific language governing 
+# or in the "LICENSE" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
 package CloudWatchClient;
@@ -77,7 +77,7 @@ our $avail_zone;
 our $instance_id;
 our $instance_type;
 our $image_id;
-our $as_group_name; 	 
+our $as_group_name;
 our $meta_data_loc = '/var/tmp/aws-mon';
 
 #
@@ -112,8 +112,8 @@ sub read_meta_data
   my $default_ttl = shift;
 
   my $location = $ENV{'AWS_EC2CW_META_DATA'};
-  if (!$location) { 	 
-    $location = $meta_data_loc if ($meta_data_loc); 	 
+  if (!$location) {
+    $location = $meta_data_loc if ($meta_data_loc);
   }
   my $meta_data_ttl = $ENV{'AWS_EC2CW_META_DATA_TTL'};
   $meta_data_ttl = $default_ttl if (!defined($meta_data_ttl));
@@ -144,31 +144,31 @@ sub read_meta_data
 }
 
 #
-# Writes meta-data to the local filesystem. 	 
-# 	 
-sub write_meta_data 	 
-{ 	 
-  my $resource = shift; 	 
-  my $data_value = shift; 	 
+# Writes meta-data to the local filesystem.
+#
+sub write_meta_data
+{
+  my $resource = shift;
+  my $data_value = shift;
 
-  if ($resource && $data_value) 	 
-  { 	 
-    my $location = $ENV{'AWS_EC2CW_META_DATA'}; 	 
-    if (!$location) { 	 
-      $location = $meta_data_loc if ($meta_data_loc); 	 
-    } 	 
+  if ($resource && $data_value)
+  {
+    my $location = $ENV{'AWS_EC2CW_META_DATA'};
+    if (!$location) {
+      $location = $meta_data_loc if ($meta_data_loc);
+    }
 
-    if ($location) 	 
-    { 	 
-      my $filename = $location.$resource; 	 
-      my $directory = dirname($filename); 	 
-      `/bin/mkdir -p $directory` unless -d $directory; 	 
+    if ($location)
+    {
+      my $filename = $location.$resource;
+      my $directory = dirname($filename);
+      `/bin/mkdir -p $directory` unless -d $directory;
 
-      open MDATA, ">$filename"; 	 
-      print MDATA $data_value; 	 
-      close MDATA; 	 
-    } 	 
-  } 	 
+      open MDATA, ">$filename";
+      print MDATA $data_value;
+      close MDATA;
+    }
+  }
 }
 
 #
@@ -180,7 +180,7 @@ sub get_ec2_endpoint
   my $endpoint = "https://ec2.amazonaws.com";
 
   if ($region) {
-    $endpoint = "https://ec2.$region.amazonaws.com"; 
+    $endpoint = "https://ec2.$region.amazonaws.com";
     if (exists $region_suffix_map{$region}) {
       $endpoint .= $region_suffix_map{$region};
     }
@@ -219,6 +219,7 @@ sub get_auto_scaling_group
   $ec2_opts{'verbose'} = $opts->{'verbose'};
   $ec2_opts{'verify'} = $opts->{'verify'};
   $ec2_opts{'user-agent'} = $opts->{'user-agent'};
+  $ec2_opts{'proxy'} = $opts->{'proxy'};
   $ec2_opts{'version'} = '2011-12-15';
   $ec2_opts{'url'} = get_ec2_endpoint();
   $ec2_opts{'aws-iam-role'} = $opts->{'aws-iam-role'};
@@ -326,14 +327,14 @@ sub get_endpoint
 {
   my $region = get_region();
   my $endpoint = "https://monitoring.amazonaws.com";
-  
+
   if ($region) {
     $endpoint = "https://monitoring.$region.amazonaws.com";
     if (exists $region_suffix_map{$region}) {
       $endpoint .= $region_suffix_map{$region};
     }
   }
-  
+
 
   return $endpoint;
 }
@@ -350,7 +351,7 @@ sub prepare_iam_role
   my $iam_role = $opts->{'aws-iam-role'};
   my $iam_dir = "/iam/security-credentials/";
 
-  # if am_role is not explicitly specified 
+  # if am_role is not explicitly specified
   if (!defined($iam_role)) {
     my $roles = get_meta_data($iam_dir, DO_NOT_CACHE);
     my $nr_of_roles = $roles =~ tr/\n//;
@@ -362,7 +363,7 @@ sub prepare_iam_role
       # if only one role
       $iam_role = $roles;
     } else {
-      $roles =~ s/\n/, /g; # puts all the roles on one line 
+      $roles =~ s/\n/, /g; # puts all the roles on one line
       $roles =~ s/, $// ; # deletes the comma at the end
       return {"code" => ERROR, "error" => "More than one IAM roles are associated with this EC2 instance: $roles."};
     }
@@ -416,7 +417,7 @@ sub prepare_iam_role
   $opts->{'aws-access-key-id'} = $id;
   $opts->{'aws-secret-key'} = $key;
   $opts->{'aws-security-token'} = $token;
-  
+
   return {"code" => OK};
 }
 
@@ -437,7 +438,7 @@ sub prepare_credentials
   }
   if (defined($aws_secret_key) && !$aws_secret_key) {
     return {"code" => ERROR, "error" => "Provided empty AWS secret key."};
-  }  
+  }
   if ($aws_access_key_id && $aws_secret_key) {
     return {"code" => OK};
   }
@@ -506,7 +507,7 @@ sub print_out
 {
   my $text = shift;
   my $filename = shift;
-  
+
   if ($filename) {
     open OUT_STREAM, ">>$filename";
     print OUT_STREAM "$text\n";
@@ -518,7 +519,7 @@ sub print_out
 }
 
 #
-# Retrieves the interface and type prefixes for the version and action supplied 
+# Retrieves the interface and type prefixes for the version and action supplied
 # e.g. 2010-08-01 => [GraniteService20100801, com.amazonaws.cloudwatch.v2010_08_01#]
 #
 sub get_interface_version_and_type
@@ -554,7 +555,7 @@ sub add_simple_parameter
   }
 
   return $json_data;
-} 
+}
 
 #
 # Iterates through hash entries and adds them to the JSON payload.
@@ -640,7 +641,7 @@ sub call_setup
   my $params = shift;
   my $opts = shift;
   my $validation_contents;
-  
+
   $opts->{'http-method'} = 'POST';
 
   if (!defined($opts->{'url'})) {
@@ -675,7 +676,7 @@ sub call
 
   my $http_headers = HTTP::Headers->new(%$headers);
   my $request = new HTTP::Request $opts->{'http-method'}, $opts->{'url'}, $http_headers, $payload;
-  
+
   if (defined($opts->{'enable-compression'}) && length($payload) > $compress_threshold_bytes) {
     $request->encode('gzip');
   }
@@ -691,12 +692,12 @@ sub call
   print_out("Payload: $payload", $outfile) if $verbose;
 
   # initial and max delay in seconds between retries
-  my $delay = 4; 
+  my $delay = 4;
   my $max_delay = 16;
 
   if (defined($opts->{'retries'})) {
     $call_attempts += $opts->{'retries'};
-  }  
+  }
   if (defined($opts->{'max-backoff-sec'})) {
     $max_delay = $opts->{'max-backoff-sec'};
   }
@@ -751,7 +752,7 @@ sub call
 
   return $response;
 }
- 
+
 #
 # Makes a remote invocation to the CloudWatch service using the AWS/Query format.
 # Returns request ID, if successful, or error message if unsuccessful.

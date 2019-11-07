@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add proxy support extracted from [Muhammet Arslan's aws-mon-scripts fork](https://github.com/geass/aws-mon-scripts)
+
 ## 1.3.0 - 2019-10-18
 ### Changed
 - Modify added metric to use mount value as filesystem value in order to simplify metric filtering at later stage
