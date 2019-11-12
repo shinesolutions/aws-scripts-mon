@@ -673,6 +673,8 @@ sub call
 
   my $user_agent = new LWP::UserAgent(agent => $opts->{'user-agent}'});
   $user_agent->timeout($http_request_timeout);
+  
+  $user_agent->proxy('https', $opts->{'proxy'});
 
   my $http_headers = HTTP::Headers->new(%$headers);
   my $request = new HTTP::Request $opts->{'http-method'}, $opts->{'url'}, $http_headers, $payload;
