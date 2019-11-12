@@ -107,6 +107,7 @@ my $version = '1.2.2';
 my $client_name = 'CloudWatch-PutInstanceData';
 
 my $mcount = 0;
+my $proxy;
 my $report_mem_util;
 my $report_mem_used;
 my $report_mem_avail;
