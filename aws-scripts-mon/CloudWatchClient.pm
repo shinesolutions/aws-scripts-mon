@@ -671,7 +671,7 @@ sub call
   my $opts = shift;
   my $failure_pattern = shift;
 
-  my $user_agent = new LWP::UserAgent(agent => $opts->{'user-agent}'});
+  my $user_agent = new LWP::UserAgent(agent => $opts->{'user-agent'});
   $user_agent->timeout($http_request_timeout);
   
   $user_agent->proxy('https', $opts->{'proxy'});
