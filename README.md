@@ -21,7 +21,7 @@ For example:
 ```
   class { '::cloudwatch':
     ...
-    zip_url => 'https://github.com/shinesolutions/aws-scripts-mon/releases/download/1.3.0/shinesolutions-aws-scripts-mon-1.3.0.zip',
+    zip_url => 'https://github.com/shinesolutions/aws-scripts-mon/releases/download/1.3.0/shinesolutions-aws-scripts-mon-1.4.0.zip',
   }
 ```
 
